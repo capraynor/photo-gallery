@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32728.150
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photo Gallery", "Photo Gallery\Photo Gallery.csproj", "{3C8AE517-F642-4F2C-B08E-72D8F436EE68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{32363F99-C256-4178-BE6E-D84D7859595B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C8AE517-F642-4F2C-B08E-72D8F436EE68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8AE517-F642-4F2C-B08E-72D8F436EE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8AE517-F642-4F2C-B08E-72D8F436EE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8AE517-F642-4F2C-B08E-72D8F436EE68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32363F99-C256-4178-BE6E-D84D7859595B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32363F99-C256-4178-BE6E-D84D7859595B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32363F99-C256-4178-BE6E-D84D7859595B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32363F99-C256-4178-BE6E-D84D7859595B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5081CE5F-A040-47F9-A511-EE0D4DF13ED8}
+	EndGlobalSection
+EndGlobal

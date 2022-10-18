@@ -1,20 +1,31 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Photo_Gallery.Entities;
+using Photo_Gallery.Infrastructures;
 using Photo_Gallery.Services.Abastractions;
 using System;
+using System.Linq;
 
 namespace UnitTests
 {
     [TestClass]
     public class Photos_Test: PhotoGalleryUnitTest
     {
+        [TestInitialize]
+        public void CleanupPhotosTable()
+        {
+            var context = this.Services.GetRequiredService<PhotoGalleryDBContext>();
+
+            context.RemoveRange(context.Photos);
+            context.SaveChanges();
+        }
+
         [TestMethod]
         public void Photo_Should_Be_Created()
         {
-            var photoService = this.ServiceProvider.GetService<IPhotoService>();
+            var photoService = this.Services.GetRequiredService<IPhotoService>();
+            var context = this.Services.GetRequiredService<PhotoGalleryDBContext>();
 
-            Assert.IsNotNull(photoService);
             var id = Guid.NewGuid();
             var photo = new Photo
             {
@@ -34,7 +45,7 @@ namespace UnitTests
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Id, id);
-            
+            Assert.AreEqual(context.Photos.Count(), 1);
         }
     }
 }

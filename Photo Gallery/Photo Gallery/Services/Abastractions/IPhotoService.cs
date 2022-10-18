@@ -7,5 +7,6 @@ namespace Photo_Gallery.Services.Abastractions
         Photo? GetPhotoById(Guid id);
         Photo GetPhotoByFilePath(string FilePath);
         void AddPhoto(Photo photo);
+        void AddPhotoFromFile(string photoFilePath);
     }
 }

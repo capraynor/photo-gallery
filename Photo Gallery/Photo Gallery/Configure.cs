@@ -25,7 +25,7 @@ namespace Photo_Gallery
                     options.UseSqlite(sqliteConnectionStr);
                 }
                 );
-            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IMediaFileService, MediaFileService>();
         }
     }
 }

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Photo_Gallery;
 using Photo_Gallery.Infrastructures;
+using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,13 +24,35 @@ var builder = WebApplication.CreateBuilder(args);
 
 Configure.ConfigureServices(builder.Services, builder.Configuration);
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.ExampleFilters();
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
+  $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+    
+});
+
+builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
+    //    c.DefaultModelExpandDepth(3);
+        
+    //});
+    app.UseReDoc(
+        c=>
+        {
+            c.RoutePrefix = "swagger";
+            c.RequiredPropsFirst();
+        });
+
+
 }
 
 app.UseHttpsRedirection();

@@ -7,7 +7,8 @@ namespace Photo_Gallery.Infrastructures
 {
     public class PhotoGalleryDBContext: DbContext
     {
-        public DbSet<Photo> Photos { get; set; }
+        public DbSet<MediaFile> MediaFiles { get; set; }
+        public DbSet<MediaDirectory> MediaDirectories { get; set; }
 
         public PhotoGalleryDBContext(DbContextOptions<PhotoGalleryDBContext> options)
         : base(options)

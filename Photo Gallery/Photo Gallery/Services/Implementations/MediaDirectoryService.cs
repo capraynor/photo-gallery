@@ -12,7 +12,7 @@ namespace Photo_Gallery.Services.Implementations
         {
             this.context = context;
         }
-        public void AddMediaDirectory(string path)
+        public MediaDirectory AddMediaDirectory(string path)
         {
             var result = new MediaDirectory()
             {
@@ -20,12 +20,19 @@ namespace Photo_Gallery.Services.Implementations
                 Path = path
             };
             this.context.MediaDirectories.Add(result);
+            this.context.SaveChanges();
+
+            return result;
         }
 
-        public IEnumerable<string> GetAllMediaFilePaths(string directoryPath)
+        public IEnumerable<MediaDirectory> GetAllMediaDirectories()
         {
-            throw new NotImplementedException();
+            return context.MediaDirectories;
         }
 
+        public MediaDirectory? GetMediaDirectoryById(Guid mediaDirectoryId)
+        {
+            return (from c in context.MediaDirectories where c.Id == mediaDirectoryId select c).FirstOrDefault();
+        }
     }
 }

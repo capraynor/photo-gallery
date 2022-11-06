@@ -4,7 +4,8 @@ namespace Photo_Gallery.Services.Abastractions
 {
     public interface IMediaDirectoryService
     {
-        void AddMediaDirectory(string photoDirectoryPath);
-        IEnumerable<string> GetAllMediaFilePaths(string directoryPath);
+        MediaDirectory AddMediaDirectory(string photoDirectoryPath);
+        MediaDirectory? GetMediaDirectoryById(Guid mediaDirectoryId);
+        IEnumerable<MediaDirectory> GetAllMediaDirectories();
     }
 }

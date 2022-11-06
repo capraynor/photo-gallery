@@ -2,6 +2,7 @@
 using Photo_Gallery.Entities;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace Photo_Gallery.Infrastructures
 {
@@ -14,6 +15,14 @@ namespace Photo_Gallery.Infrastructures
         : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MediaFile>()
+                .HasOne(p => p.MediaDirectory)
+                .WithMany(d => d.Photos)
+                .HasForeignKey(m => m.MediaDirectoryId);
         }
     }
 }

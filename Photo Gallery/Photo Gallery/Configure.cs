@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Photo_Gallery.Infrastructures;
 using Photo_Gallery.Services.Abastractions;
 using Photo_Gallery.Services.Implementations;
@@ -12,7 +14,9 @@ namespace Photo_Gallery
 
             // Add services to the container.
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -22,10 +26,26 @@ namespace Photo_Gallery
                 {
                     var sqliteConnectionStr = config.GetConnectionString("DefaultConnection");
 
-                    options.UseSqlite(sqliteConnectionStr);
+                    options.UseLazyLoadingProxies()
+                        .UseSqlite(sqliteConnectionStr);
                 }
                 );
             services.AddScoped<IMediaFileService, MediaFileService>();
+            services.AddScoped<IMediaDirectoryService, MediaDirectoryService>();
+            services.AddSingleton<IMediaFileIndexer, MediaFileIndexer>();
+            services.AddSingleton<IMediaDirectoryScanner, MediaDirectoryScanner>();
+            services.AddHostedService(p => p.GetRequiredService<IMediaFileIndexer>());
+            services.AddHostedService(p => p.GetRequiredService<IMediaDirectoryScanner>());
+
+
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace Photo_Gallery.Services.Abastractions
         MediaFile? GetMediaFileById(Guid id);
         MediaFile GetMediaFileByPath(string FilePath);
         void AddMediaFile(MediaFile photo);
-        void AddMediaFromFile(string photoFilePath);
+        MediaFile AddMediaFileFromPath(string? filePath, Guid directoryId);
     }
 }

@@ -31,6 +31,8 @@ builder.Services.AddSwaggerGen(c =>
   $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
     
 });
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 var app = builder.Build();

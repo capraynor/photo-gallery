@@ -1,4 +1,6 @@
-﻿using Photo_Gallery.Entities;
+﻿using AutoMapper;
+using Photo_Gallery.DTOs;
+using Photo_Gallery.Entities;
 using Photo_Gallery.Infrastructures;
 using Photo_Gallery.Services.Abastractions;
 
@@ -8,31 +10,57 @@ namespace Photo_Gallery.Services.Implementations
     {
         private PhotoGalleryDBContext context;
 
-        public MediaDirectoryService(PhotoGalleryDBContext context)
+        public IMapper Mapper { get; }
+
+        public MediaDirectoryService(PhotoGalleryDBContext context, IMapper mapper)
         {
             this.context = context;
+            this.Mapper = mapper;
         }
         public MediaDirectory AddMediaDirectory(string path)
         {
-            var result = new MediaDirectory()
+            var directory = new MediaDirectory()
             {
                 Id = Guid.NewGuid(),
                 Path = path
             };
-            this.context.MediaDirectories.Add(result);
+            this.context.MediaDirectories.Add(directory);
             this.context.SaveChanges();
 
-            return result;
+            return directory;
         }
 
         public IEnumerable<MediaDirectory> GetAllMediaDirectories()
         {
-            return context.MediaDirectories;
+            var directories = context.MediaDirectories;
+            return directories;
         }
 
         public MediaDirectory? GetMediaDirectoryById(Guid mediaDirectoryId)
         {
-            return (from c in context.MediaDirectories where c.Id == mediaDirectoryId select c).FirstOrDefault();
+            var result = (from c in context.MediaDirectories where c.Id == mediaDirectoryId select c).FirstOrDefault();
+            if (result == null)
+            {
+                return null;
+            }
+            var directoryDTO = Mapper.Map<MediaDirectory>(result);
+            return directoryDTO;
+        }
+
+
+        public int GetPhotoCount(Guid photoDirectoryId)
+        {
+            var directory = this.GetMediaDirectoryById(photoDirectoryId);
+            if (directory != null)
+            {
+                var count = context.Entry(directory)
+                        .Collection(d => d.Photos)
+                        .Query()
+                        .Count();
+                return count;
+            }
+
+            return 0;
         }
     }
 }

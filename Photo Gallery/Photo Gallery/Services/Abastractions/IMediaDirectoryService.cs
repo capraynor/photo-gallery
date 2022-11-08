@@ -1,4 +1,5 @@
-﻿using Photo_Gallery.Entities;
+﻿using Photo_Gallery.DTOs;
+using Photo_Gallery.Entities;
 
 namespace Photo_Gallery.Services.Abastractions
 {
@@ -7,5 +8,6 @@ namespace Photo_Gallery.Services.Abastractions
         MediaDirectory AddMediaDirectory(string photoDirectoryPath);
         MediaDirectory? GetMediaDirectoryById(Guid mediaDirectoryId);
         IEnumerable<MediaDirectory> GetAllMediaDirectories();
+        int GetPhotoCount(Guid photoDirectoryId);
     }
 }

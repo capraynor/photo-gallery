@@ -6,6 +6,6 @@ namespace Photo_Gallery.DTOs
     {
         public virtual string Path { get; set; }
         public virtual Guid Id { get; set; }
-        public long PhotosCount { get; set; }
+        public virtual int PhotosCount { get; set; }
     }
 }

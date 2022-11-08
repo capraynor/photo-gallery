@@ -26,7 +26,7 @@ namespace Photo_Gallery
                 {
                     var sqliteConnectionStr = config.GetConnectionString("DefaultConnection");
 
-                    options.UseLazyLoadingProxies()
+                    options
                         .UseSqlite(sqliteConnectionStr);
                 }
                 );

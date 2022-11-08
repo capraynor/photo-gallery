@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Photo_Gallery.DTOs;
 using Photo_Gallery.Entities;
 using Photo_Gallery.Services.Abastractions;
+using System.IO;
 
 namespace Photo_Gallery.Controllers
 {
@@ -40,6 +41,21 @@ namespace Photo_Gallery.Controllers
             var allDirectories = this.MediaDirectoryService.GetAllMediaDirectories();
 
             var result = this.Mapper.Map<List<MediaDirectoryDTO>>(allDirectories);
+
+            result.ForEach(d => d.PhotosCount = this.MediaDirectoryService.GetPhotoCount(d.Id));
+
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public MediaDirectoryDTO GetDirectoryById(Guid id)
+        {
+            var directory = this.MediaDirectoryService.GetMediaDirectoryById(id);
+            var count = this.MediaDirectoryService.GetPhotoCount(id);
+
+            var result = Mapper.Map<MediaDirectoryDTO>(directory);
+            result.PhotosCount = count;
+
             return result;
         }
 

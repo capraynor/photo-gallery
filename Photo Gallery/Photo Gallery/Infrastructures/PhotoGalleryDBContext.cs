@@ -21,7 +21,7 @@ namespace Photo_Gallery.Infrastructures
         {
             modelBuilder.Entity<MediaFile>()
                 .HasOne(p => p.MediaDirectory)
-                .WithMany(d => d.Photos)
+                .WithMany(d => d.MediaFiles)
                 .HasForeignKey(m => m.MediaDirectoryId);
         }
     }

@@ -47,6 +47,20 @@ namespace Photo_Gallery.Services.Implementations
             return directoryDTO;
         }
 
+        public IQueryable<MediaFile>? GetmediaFilesByDirectory(Guid mediaDirectoryId)
+        {
+            var mediaDirectory = this.GetMediaDirectoryById(mediaDirectoryId);
+            if (mediaDirectory == null)
+            {
+                return null;
+            }
+            else
+            {
+                var result = context.Entry(mediaDirectory).Collection(d => d.MediaFiles).Query();
+                return result;
+            }
+        }
+
 
         public int GetPhotoCount(Guid photoDirectoryId)
         {
@@ -54,7 +68,7 @@ namespace Photo_Gallery.Services.Implementations
             if (directory != null)
             {
                 var count = context.Entry(directory)
-                        .Collection(d => d.Photos)
+                        .Collection(d => d.MediaFiles)
                         .Query()
                         .Count();
                 return count;

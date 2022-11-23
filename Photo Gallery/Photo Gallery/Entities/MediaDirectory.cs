@@ -7,7 +7,7 @@ namespace Photo_Gallery.Entities
     {
         public virtual string Path { get; set; }
         public virtual Guid Id { get; set; }
-        public virtual ICollection<MediaFile> Photos { get; set; }
+        public virtual ICollection<MediaFile> MediaFiles { get; set; }
         public IEnumerable<string> AllFiles { get
             {
                 return Directory.EnumerateFiles(Path, "*.*", SearchOption.AllDirectories);

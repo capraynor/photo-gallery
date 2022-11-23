@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Photo_Gallery.DTOs;
 using Photo_Gallery.Entities;
 using Photo_Gallery.Services.Abastractions;
@@ -56,6 +57,18 @@ namespace Photo_Gallery.Controllers
             var result = Mapper.Map<MediaDirectoryDTO>(directory);
             result.PhotosCount = count;
 
+            return result;
+        }
+
+        [HttpGet("{directoryId}/media-files")]
+        public ActionResult<IEnumerable<MediaFileDTO>> GetMediaFileByDirectory(Guid directoryId)
+        {
+            var mediaFiles = this.MediaDirectoryService.GetmediaFilesByDirectory(directoryId);
+            if (mediaFiles == null)
+            {
+                return new NotFoundResult();
+            }
+            var result = Mapper.Map<List<MediaFileDTO>>(mediaFiles.ToList());
             return result;
         }
 

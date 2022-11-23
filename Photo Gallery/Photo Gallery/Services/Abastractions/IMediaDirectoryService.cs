@@ -7,6 +7,7 @@ namespace Photo_Gallery.Services.Abastractions
     {
         MediaDirectory AddMediaDirectory(string photoDirectoryPath);
         MediaDirectory? GetMediaDirectoryById(Guid mediaDirectoryId);
+        IQueryable<MediaFile>? GetmediaFilesByDirectory(Guid mediaDirectoryId);
         IEnumerable<MediaDirectory> GetAllMediaDirectories();
         int GetPhotoCount(Guid photoDirectoryId);
     }

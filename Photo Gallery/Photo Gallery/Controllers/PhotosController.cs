@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Photo_Gallery.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
     {

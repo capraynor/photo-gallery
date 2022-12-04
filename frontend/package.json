@@ -35,5 +35,10 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1",
     "wepack-cli": "^0.0.1-security"
+  },
+  "dependencies": {
+    "photoswipe": "^5.3.4",
+    "photoswipe-video-plugin": "^1.0.2",
+    "tsx-dom": "^2.0.0"
   }
 }

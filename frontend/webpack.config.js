@@ -28,7 +28,13 @@ const config = {
     new HtmlWebpackPlugin({
       template: 'photo-viewer.html',
       filename: 'photo-viewer.html',
-      chunks: ['photoViewer', 'photoViewerStyleSheet']
+      chunks: ['photoViewerStyleSheet', 'photoViewer' ]
+    }),
+
+    new HtmlWebpackPlugin({
+      template: 'photo-viewer.html',
+      filename: 'index.html',
+      chunks: ['photoViewerStyleSheet', 'photoViewer']
     }),
 
     // Add your plugins here

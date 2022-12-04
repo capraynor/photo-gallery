@@ -2,9 +2,15 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "ESNext",
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "moduleResolution": "node",
+    "paths": {
+      "photoswipe/lightbox": ["./node_modules/photoswipe/dist/types/lightbox/lightbox.d.ts"]
+    }
   },
-  "files": ["src/index.ts"]
+  "include": ["src/"]
 }

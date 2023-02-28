@@ -1,4 +1,5 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
+const { VueLoaderPlugin } = require('vue-loader')
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,8 +14,10 @@ const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader
 
 const config = {
   entry: {
-    photoViewer: './src/index.ts',
-    photoViewerStyleSheet: './src/less/photoViewer.less'
+    photoViewer: './src/photo-viewer.ts',
+    photoViewerStyleSheet: './src/less/photoViewer.less',
+    management: './src/management.ts',
+    managementStyleSheet: './src/less/management.less'
   },
   output: {
     filename: "[name].[contenthash].js",
@@ -36,6 +39,13 @@ const config = {
       filename: 'index.html',
       chunks: ['photoViewerStyleSheet', 'photoViewer']
     }),
+
+    new HtmlWebpackPlugin({
+      template: 'management.html',
+      filename: 'management.html',
+      chunks: ['management', 'managementStyleSheet']
+    }),
+    new VueLoaderPlugin()
 
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -59,6 +69,10 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
       },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

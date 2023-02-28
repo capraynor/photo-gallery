@@ -36,7 +36,13 @@ namespace Photo_Gallery
             services.AddSingleton<IMediaDirectoryScanner, MediaDirectoryScanner>();
             services.AddHostedService(p => p.GetRequiredService<IMediaFileIndexer>());
             services.AddHostedService(p => p.GetRequiredService<IMediaDirectoryScanner>());
-
+            services.AddLogging(x =>
+            {
+                x.AddConsole();
+#if DEBUG
+                x.AddDebug();
+# endif
+            });
 
 
             var mapperConfig = new MapperConfiguration(mc =>
@@ -46,6 +52,7 @@ namespace Photo_Gallery
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Photo_Gallery.Controllers
             var directoryDTO = Mapper.Map<MediaDirectoryDTO>(mediaDirectory);
             if (mediaDirectory != null)
             {
-                this.DirectoryScanner.StartDirectoryIndexing();
+                this.DirectoryScanner.AddDirectoryToScanningQueue(mediaDirectory);
                 return directoryDTO;
             }
             else

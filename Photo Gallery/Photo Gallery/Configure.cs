@@ -39,9 +39,6 @@ namespace Photo_Gallery
             services.AddLogging(x =>
             {
                 x.AddConsole();
-#if DEBUG
-                x.AddDebug();
-# endif
             });
 
 

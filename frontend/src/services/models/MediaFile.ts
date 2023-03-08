@@ -14,3 +14,9 @@ export class MediaFile {
     
   }
 }
+
+export class MediaDirectory{
+  public path: string;
+  public id?: string;
+  public photosCount?: string;
+}

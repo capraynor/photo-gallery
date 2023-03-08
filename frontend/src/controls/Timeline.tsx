@@ -1,4 +1,4 @@
-import {h} from "tsx-dom";
+import * as a  from "tsx-dom";
 import { getMediaFileByCountSync, getMediaFiles, getTotalFileCount } from "../services/MediaFileService";
 import { MediaFile } from "../services/models/MediaFile";
 import PhotoSwipe from "photoswipe";
@@ -61,9 +61,9 @@ export class Timeline {
 
   constructor(parent: HTMLElement) {
     this.el = <div class="photo-viewer__timeline">
-      {this.scrollingEl = <div class="photo-viewer__timeline__scrolling"></div> as unknown as HTMLElement}
+      {this.scrollingEl = <div class="photo-viewer__timeline__scrolling"></div>}
 
-    </div> as unknown as HTMLElement;
+    </div>;
     parent.appendChild(this.el);
     this.mediaFiles = [];
     this.initTimeline();

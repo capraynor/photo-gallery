@@ -8,6 +8,7 @@ export class MediaFile {
   public mD5Str: string;
   public id: string;
   public mediaDirectoryId: string;
+  public requestPath: string;
   public displayCount: number;
 
   constructor(){

@@ -1,5 +1,5 @@
 import * as a  from "tsx-dom";
-import { getMediaFileByCountSync, getMediaFiles, getTotalFileCount } from "../services/MediaFileService";
+import { getMediaFileByCountSync, getMediaFiles, getTotalFileCount, initializeTotalCount } from "../services/MediaFileService";
 import { MediaFile } from "../services/models/MediaFile";
 import PhotoSwipe from "photoswipe";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
@@ -18,7 +18,7 @@ export class Timeline {
   el: HTMLElement;
   scrollingEl: HTMLElement;
   mediaFiles: MediaFile[];
-  mediaFilePerLine: number = 20;
+  mediaFilePerLine: number = 6;
   totalCount: number = 0;
   displayAreaBegin: number = 0;
   displayAreaEnd: number = 0;
@@ -71,6 +71,7 @@ export class Timeline {
   }
   async initTimeline() {
     this.totalCount = await getTotalFileCount();
+    await initializeTotalCount();
     this.scrollingEl.style.height = `${this.timelineHeight}px`;
 
     setTimeout(() => {
@@ -88,7 +89,7 @@ export class Timeline {
       this.lightbox.addFilter('itemData', (itemData, index) => {
         let mediaFile = getMediaFileByCountSync(index);
         return {
-          src: mediaFile.filePath,
+          src: mediaFile.requestPath,
           // videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
           // type: "video"
         };;
@@ -205,7 +206,7 @@ export class Timeline {
             data-line-number={cellPosition.line} 
             data-column-number={cellPosition.column}
             data-media-file-number={mediaFileNumber}>
-              <img class="timeline__cell__img" src={fileToRender.thumbnailFilePath || fileToRender.filePath}></img>
+              <img class="timeline__cell__img" src={fileToRender.thumbnailFilePath || fileToRender.requestPath}></img>
       </div>;
       this.el.appendChild(imageEl)
 

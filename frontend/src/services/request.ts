@@ -4,6 +4,8 @@ let baseURL = "/";
 if (DEBUG){
     baseURL = BASE_URL || "https://localhost:7046"
 }
+
+export const BaseURL = baseURL;
 export async function get<resT>(url: string ): Promise<resT>{
     url = urlJoin(baseURL, url);
     const response = await fetch(url, {

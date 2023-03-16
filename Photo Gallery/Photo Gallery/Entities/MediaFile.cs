@@ -45,7 +45,7 @@ namespace Photo_Gallery.Entities
 
         private void LoadVideoMetaFromFile()
         {
-            DateTimeOffset createdDate = File.GetCreationTimeUtc(FilePath);
+            DateTime createdDate = File.GetCreationTimeUtc(FilePath);
             this.CreatedDate = this.ShottingDate = createdDate;
         }
 
@@ -60,7 +60,7 @@ namespace Photo_Gallery.Entities
 
 
            
-            DateTimeOffset lastWriteTimeUTC = File.GetLastWriteTimeUtc(FilePath);
+            DateTime lastWriteTimeUTC = File.GetLastWriteTimeUtc(FilePath);
 
 
             this.ShottingDate = lastWriteTimeUTC;
@@ -102,8 +102,8 @@ namespace Photo_Gallery.Entities
 
         public virtual string FilePath { get; set; }
         public virtual string? ThumbnailFilePath { get; set; }
-        public virtual DateTimeOffset ShottingDate { get; set; }
-        public virtual DateTimeOffset CreatedDate { get; set; }
+        public virtual DateTime ShottingDate { get; set; }
+        public virtual DateTime CreatedDate { get; set; }
 
         public virtual double Longitude { get; set; }
         public virtual double Latitude { get; set; }

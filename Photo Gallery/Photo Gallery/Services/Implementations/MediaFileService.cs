@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Photo_Gallery.Entities;
 using Photo_Gallery.Infrastructures;
 using Photo_Gallery.Services.Abastractions;
@@ -56,6 +57,18 @@ namespace Photo_Gallery.Services.Implementations
         public MediaFile? GetMediaFileById(Guid id)
         {
             var result =  (from c in this.Context.MediaFiles where c.Id == id select c).FirstOrDefault();
+            return result;
+        }
+
+        public async Task<int> GetMediaFileTotalCount()
+        {
+            return await this.Context.MediaFiles.CountAsync();
+        }
+
+        public async Task<List<MediaFile>> GetMediaFile(int skip, int take)
+        {
+            var query = from c in this.Context.MediaFiles orderby c.ShottingDate ascending select c;
+            var result = query.Skip(skip).Take(take).ToList();
             return result;
         }
     }

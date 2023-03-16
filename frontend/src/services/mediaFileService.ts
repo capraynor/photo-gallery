@@ -4,7 +4,7 @@ import urlJoin from "url-join";
 
 
 var totalCount = 0;
-const mediaFiles: MediaFile[] = [];
+const MEDIA_FILES_CACHE: MediaFile[] = [];
 
 export async function initializeTotalCount(){
   const count = await getTotalFileCount();
@@ -12,7 +12,7 @@ export async function initializeTotalCount(){
 }
 
 export function getMediaFileByCountSync(mediaFileCount: number){
-  const result =  mediaFiles[mediaFileCount];
+  const result =  MEDIA_FILES_CACHE[mediaFileCount];
   return result;
 }
 
@@ -37,7 +37,7 @@ export async function getMediaFiles(from: number, to: number): Promise<MediaFile
   mediaFiles.forEach(x => {
     x.displayCount = fileNumber;
     x.requestPath = urlJoin(BaseURL, x.requestPath);
-    mediaFiles[fileNumber] = x;
+    MEDIA_FILES_CACHE[fileNumber] = x;
     fileNumber ++;
   });
 

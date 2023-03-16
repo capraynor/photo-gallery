@@ -16,6 +16,15 @@ export function getMediaFileByCountSync(mediaFileCount: number){
   return result;
 }
 
+export async function ensureMediaFileMetadata(mediaFileCount: number){
+  const startCount = Math.min(0, mediaFileCount - 100);
+  const endCount = Math.max(totalCount, mediaFileCount + 100);
+  for (let i = startCount; i < endCount; i++){
+    
+  }
+  getMediaFiles(startCount, endCount);
+
+}
 export async function getTotalFileCount(): Promise<number>{
   const result = await get<number>("/api/media-files/count");
   return result;

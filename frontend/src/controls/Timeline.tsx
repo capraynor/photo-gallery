@@ -1,6 +1,6 @@
 import * as a  from "tsx-dom";
 import { getMediaFileByCountSync, getMediaFiles, getTotalFileCount, initializeTotalCount } from "../services/MediaFileService";
-import { MediaFile } from "../services/models/MediaFile";
+import { MediaFile, MediaFileType } from "../services/models/MediaFile";
 import PhotoSwipe from "photoswipe";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 const PhotoSwipeVideoPlugin = require("photoswipe-video-plugin").default ;
@@ -88,11 +88,21 @@ export class Timeline {
       });
       this.lightbox.addFilter('itemData', (itemData, index) => {
         let mediaFile = getMediaFileByCountSync(index);
-        return {
-          src: mediaFile.requestPath,
-          // videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          // type: "video"
-        };;
+
+        if (mediaFile.fileType === MediaFileType.Image) {
+          return {
+            src: mediaFile.requestPath,
+          };
+        } else if (mediaFile.fileType === MediaFileType.Video) {
+          return {
+            videoSrc: mediaFile.requestPath,
+            type: "video"
+          }
+        } else {
+          return {
+            src: mediaFile.requestPath,
+          }
+        }
       });
       this.lightbox.init();
 

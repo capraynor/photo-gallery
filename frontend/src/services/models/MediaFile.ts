@@ -10,6 +10,7 @@ export class MediaFile {
   public mediaDirectoryId: string;
   public requestPath: string;
   public displayCount: number;
+  public fileType: MediaFileType;
 
   constructor(){
     
@@ -20,4 +21,10 @@ export class MediaDirectory{
   public path: string;
   public id?: string;
   public photosCount?: string;
+}
+
+export enum MediaFileType{
+  Image = 0,
+  Video = 1,
+  Unknown = 2
 }

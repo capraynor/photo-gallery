@@ -16,5 +16,6 @@
         public virtual string MD5Str { get; set; }
         public virtual Guid Id { get; set; }
         public virtual Guid MediaDirectoryId { get; set; }
+        public virtual MediaFileType FileType { get; set; }
     }
 }

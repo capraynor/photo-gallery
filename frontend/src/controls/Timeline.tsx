@@ -216,7 +216,10 @@ export class Timeline {
             data-line-number={cellPosition.line} 
             data-column-number={cellPosition.column}
             data-media-file-number={mediaFileNumber}>
-              <img class="timeline__cell__img" src={fileToRender.thumbnailFilePath || fileToRender.requestPath}></img>
+              {
+                fileToRender.fileType === MediaFileType.Video? <video class="timeline__cell__video" src={fileToRender.requestPath}></video> : <img class="timeline__cell__img" src={fileToRender.thumbnailFilePath || fileToRender.requestPath}></img>
+              }
+              
       </div>;
       this.el.appendChild(imageEl)
 

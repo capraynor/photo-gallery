@@ -8,8 +8,8 @@
     "build": "webpack --mode=production --node-env=production",
     "build:dev": " rm -fr ./dist/ && webpack --mode=development",
     "build:prod": "rm -fr ./dist/ && webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve --mode=development"
+    "watch": "webpack --watch --mode development",
+    "serve": "webpack serve --mode=development --host 0.0.0.0"
   },
   "author": "",
   "license": "ISC",

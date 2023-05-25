@@ -1,5 +1,5 @@
 import { MediaDirectory } from "./models/MediaFile";
-import { get, put } from "./request";
+import { get, post, put } from "./request";
 
 export async function getAllMediaDirectories(){
     var result = await get<MediaDirectory[]>("/api/media-directories");
@@ -13,3 +13,7 @@ export async function addMediaDirectory(directoryPath: string){
     return result;
 }
 
+export async function startScanDirectory(directoryId: string){
+    var result = await post<unknown, MediaDirectory>(`/api/media-directories/scan-directory?directoryId=${directoryId}`, null);
+    return result;
+}

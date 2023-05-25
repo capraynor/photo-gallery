@@ -1,5 +1,5 @@
 import { Modal } from "bootstrap";
-import { getAllMediaDirectories } from "../services/mediaDirectoryService";
+import { getAllMediaDirectories, startScanDirectory } from "../services/mediaDirectoryService";
 
 export class Management {
     el: HTMLElement;
@@ -12,55 +12,47 @@ export class Management {
         const mediaDirectories = await getAllMediaDirectories();
 
         const result = <div class="management-directories">
-            <h2>目录管理</h2>
+            <h2>Directory Management</h2>
             {
                 mediaDirectories.map(x => {
-                    return <div class="row management-directories-directory">
-                        <div class="col-md-2 fw-bold">
-                            路径
-                        </div>
-                        <div class="col-md-10">
-                            {x.path}
-                        </div>
-                        <div class="col-md-2 fw-bold">
-                            文件列表
-                        </div>
-                        <div class="col-md-10">
-                            ---grid in here ---
-                            ---for path {x.path} ---
+                    return <div class="card">
+                        <div class="card-body">
+
+                            <div class="row management-directories-directory">
+                                <div class="col-md-2 fw-bold">
+                                    Path
+                                </div>
+                                <div class="col-md-10">
+                                    {x.path}
+                                </div>
+                                <div class="col-md-2 fw-bold">
+                                    Files Count
+                                </div>
+                                <div class="col-md-10">
+                                    {x.photosCount}
+                                </div>
+                                <div class="col-md-5">
+                                <button class="btn btn-secondary" onClick={() => {this.scanDirectory(x.id)}}>Scan Directory</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 })
             }
 
-            <button class="btn btn-primary" onClick={this.openAddDirectoryDialog}>添加目录</button>
+            <hr></hr>
+            <button class="btn btn-primary" onClick={this.openAddDirectoryDialog.bind(this)}>Add Directory</button>
         </div>;
         return result;
+    }
+    async scanDirectory(directoryId: string) {
+        await startScanDirectory(directoryId);
+        alert("Scan Directory Job Triggered. ")
     }
     async render() {
         this.el = <div class="container">
             <div class="management">
                 {await this.renderDirectories()}
-                <hr></hr>
-                <div class="management-scanning">
-                    <h2>扫描状态</h2>
-                    <div class="col-md-3 fw-bold">
-                        最近扫描的10个文件
-                    </div>
-                    <div class="col-md-10">
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                        <div>C:\photos\long-path test</div>
-                    </div>
-                </div>
-                <hr></hr>
 
             </div>
         </div>
@@ -79,9 +71,6 @@ type AddMediaDirectoryDialogResult = {
 }
 class AddMediaDirectoryDialog {
     modal: Modal;
-    promise: Promise<AddMediaDirectoryDialogResult>;
-    promiseResolve: (value: AddMediaDirectoryDialogResult) => void;
-    promiseReject: (reason?: any) => void;
     pathInputEl: HTMLElement;
     constructor() {
         const addDirectoryDialog = new Modal(
@@ -90,7 +79,7 @@ class AddMediaDirectoryDialog {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Add Media Directory</h5>
-                            <button type="button" class="btn-close" onClick={this.hide} aria-label="Close"></button>
+                            <button type="button" class="btn-close" onClick={this.hide.bind(this)} aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
@@ -99,8 +88,8 @@ class AddMediaDirectoryDialog {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onClick={this.hide}>Close</button>
-                            <button type="button" class="btn btn-primary" onClick={this.onAddMediaDirectoryButtonClicked}>Add Media Directory</button>
+                            <button type="button" class="btn btn-secondary" onClick={this.hide.bind(this)}>Close</button>
+                            <button type="button" class="btn btn-primary" onClick={this.onAddMediaDirectoryButtonClicked.bind(this)}>Add Media Directory</button>
                         </div>
                     </div>
                 </div>
@@ -112,26 +101,15 @@ class AddMediaDirectoryDialog {
         this.modal = addDirectoryDialog;
     }
 
-    async show() {
+    show() {
         this.modal.show();
-        this.promise = new Promise((resolve, reject) => {
-            this.promiseResolve = resolve;
-            this.promiseReject = reject;
-        });
-        return this.promise;
     }
 
-    async hide() {
-        this.promiseResolve({
-            hasNewDirectoryAdded: false
-        });
+    hide() {
         this.modal.hide();
     }
 
     private onAddMediaDirectoryButtonClicked() {
-
-        this.promiseResolve({
-            hasNewDirectoryAdded: true
-        });
+        
     }
 }

@@ -2,7 +2,7 @@ import urlJoin from "url-join";
 
 let baseURL = "/";
 if (DEBUG){
-    baseURL = BASE_URL || "https://localhost:7046"
+    baseURL = BASE_URL || "/"
 }
 
 export const BaseURL = baseURL;
